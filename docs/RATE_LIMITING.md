@@ -288,4 +288,15 @@ Potential improvements to consider:
 - [Session Management](./SESSION_MANAGEMENT.md) - 7-day session system
 - [Caching](./CACHING.md) - Redis caching for performance
 - [Privacy Architecture](./PRIVACY_ARCHITECTURE.md) - Overall system architecture
+- [Upload Security](./UPLOAD_SECURITY.md) - Authenticated Cloudinary uploads + daily quota (ISSUE-SAL-001)
+
+## Upload quota (POST /api/upload)
+
+In addition to IP-based limits, uploads enforce a **per-principal daily quota**:
+
+| Limit | Window | Key | On exceed |
+|------|--------|-----|-----------|
+| 20 uploads | UTC calendar day | `upload_quota:{principalID}:{YYYY-MM-DD}` | HTTP 429 |
+
+Fails closed (HTTP 503) if Redis cannot enforce the quota. Full details: [UPLOAD_SECURITY.md](./UPLOAD_SECURITY.md).
 
