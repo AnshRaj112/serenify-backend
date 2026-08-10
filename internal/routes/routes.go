@@ -57,7 +57,7 @@ func SetupRoutes(r *chi.Mux) {
 	r.Get("/api/notifications", handlers.GetNotifications)
 	r.Put("/api/notifications/{id}/read", handlers.MarkNotificationRead)
 
-	// File upload routes
+	// File upload (authenticated; global CORS allowlist; per-user daily quota)
 	r.Post("/api/upload", handlers.UploadFile)
 
 	// Admin routes
